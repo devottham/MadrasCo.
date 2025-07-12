@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonText.innerHTML = `<span class="spinner"></span> Processing Order...`;
 
         // Send to Google Sheets via Apps Script
-        fetch("https://script.google.com/macros/s/AKfycbwxYHY4xeUQ1z6twAd4BtLSotOzhtMkd56RhpU1eDE/dev", {
+        fetch("https://script.google.com/macros/s/AKfycbxu8FyAaSeGcNonJb7ruunHTB___cmz5T5g1JL0Os7X5OlIeNR-pahG2md49Odv_ZWc/exec", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(order)
