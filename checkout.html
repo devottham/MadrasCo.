@@ -506,6 +506,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             submitBtn.disabled = false;
             buttonText.textContent = 'Place Order';
+            
+            console.log("SheetDB response:", data);
 
             if (data.created === 1) {
                showMessage('success', 'Your order has been placed successfully!');
