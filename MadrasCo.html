@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madras Roast Co. | Indian Brews & Bites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <style>
+        :root {
+            --primary: #5d4037;
+            --secondary: #d7ccc8;
+            --accent: #8d6e63;
+            --text: #3e2723;
+            --light: #faf8f5;
+            --dark: #2c1e1a;
+            --gold: #c8a951;
+            --transition: all 0.4s ease;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --vintage-paper: #f5f0e6;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Georgia',serif}
+        body{background:var(--light);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+        /* --- Header --- */
+        .header{
+            position:fixed;top:0;left:0;width:100%;padding:1rem 5%;
+            display:flex;align-items:center;justify-content:space-between;
+            background:white;box-shadow:var(--shadow);z-index:1000;
+        }
+        .logo{font-size:2rem;font-weight:700;color:var(--primary);}
+        .navbar{display:flex;gap:2.5rem}
+        .navbar a{font-size:1.1rem;color:var(--text);text-decoration:none;position:relative}
+        .navbar a::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:2px;background:var(--primary);transition:width .4s}
+        .navbar a:hover::after{width:100%}
+        .header-buttons{display:flex;align-items:center;gap:1rem}
+        .cart-icon{position:relative;font-size:1.5rem;color:var(--primary);cursor:pointer;margin-left:.5rem}
+        .cart-count{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:.75rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+        .btn{display:inline-block;padding:.8rem 2rem;background:var(--primary);color:#fff;border:none;border-radius:4px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--transition)}
+        .btn:hover{background:var(--dark);transform:translateY(-2px)}
+        #menu-btn{display:none;font-size:1.8rem;cursor:pointer;color:var(--primary)}
+
+        /* --- Hero --- */
+        .home{
+            min-height:100vh;display:flex;align-items:center;justify-content:center;
+            background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),
+                       url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            text-align:center;padding:0 1rem;
+        }
+        .home-content h1{font-family:'Georgia',serif;font-size:clamp(2.8rem,5vw,4.5rem);color:#fff;text-shadow:0 4px 12px rgba(0,0,0,.4);margin-bottom:1rem}
+        .home-content p{color:#fff;font-size:clamp(1rem,2vw,1.25rem);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+
+        /* --- Sections --- */
+        section{padding:6rem 5%}
+        .heading{font-size:clamp(2rem,4vw,2.8rem);text-align:center;margin-bottom:3rem;color:var(--primary);position:relative}
+        .heading::after{content:'';position:absolute;left:50%;bottom:-8px;width:70px;height:3px;background:var(--accent);transform:translateX(-50%)}
+
+        /* --- About --- */
+        .about .row{display:flex;align-items:center;gap:3rem;flex-wrap:wrap}
+        .about-image{flex:1 1 450px;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+        .about-image img{width:100%;display:block;transition:transform .5s}
+        .about-image:hover img{transform:scale(1.05)}
+        .about-content{flex:1 1 450px}
+        .about-content h3{font-size:2rem;color:var(--primary);margin-bottom:1rem}
+        .about-content p{color:#555;margin-bottom:1rem;line-height:1.8}
+        .icons-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2rem;margin-top:2rem}
+        .icons{text-align:center;padding:1.5rem;background:#fff;border-radius:10px;box-shadow:var(--shadow)}
+        .icons img{width:60px;margin-bottom:.5rem}
+        .icons h3{font-size:1.1rem;color:var(--primary)}
+
+        /* --- Menu --- */
+        .menu{background:#fff}
+        .menu-tabs{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+        .tab-btn{padding:.7rem 1.5rem;border:none;border-radius:4px;cursor:pointer;background:var(--secondary);color:var(--text);font-weight:600}
+        .tab-btn.active,.tab-btn:hover{background:var(--primary);color:#fff}
+        .menu-content{display:none}
+        .menu-content.active{display:block}
+        .box-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem}
+        .box{background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);transition:var(--transition);position:relative}
+        .box:hover{transform:translateY(-8px)}
+        .box img{width:100%;height:200px;object-fit:cover}
+        .box .content{padding:1.2rem}
+        .box .content h3{font-size:1.3rem;color:var(--primary);margin-bottom:.5rem}
+        .box .content p{color:#666;margin-bottom:1rem;font-size:.95rem}
+        .box .content .price{font-size:1.4rem;font-weight:700;color:var(--accent)}
+        .add-to-cart{background:var(--primary);color:#fff;border:none;border-radius:4px;padding:.6rem 0;width:100%;cursor:pointer;font-weight:600}
+        .add-to-cart:hover{background:var(--dark)}
+
+        /* --- Review --- */
+        .review {
+            padding: 6rem 5%;
+            background: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .review::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(249, 246, 242, 0.9);
+        }
+
+        .review .heading {
+            position: relative;
+            z-index: 1;
+        }
+
+        .review-slider {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .swiper-slide:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .fa-quote-left {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .swiper-slide img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 4px solid var(--secondary);
+        }
+
+        .stars {
+            margin-bottom: 1.5rem;
+        }
+
+        .stars i {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+
+        .swiper-slide p {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .swiper-slide h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .swiper-slide span {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: var(--secondary);
+            opacity: 1;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--primary);
+        }
+
+        /* --- Book --- */
+        .book{background:var(--light)}
+        .book .container{display:flex;flex-wrap:wrap;gap:3rem}
+        .book-image{flex:1 1 400px;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+        .book-image img{width:100%;height:100%;object-fit:cover}
+        .book-form{flex:1 1 400px;background:#fff;padding:2.5rem;border-radius:12px;box-shadow:var(--shadow)}
+        .book-form h2{text-align:center;color:var(--primary);margin-bottom:1.5rem;font-size:1.8rem}
+        .book .box{width:100%;padding:1rem;margin-bottom:1rem;border:1px solid #ddd;border-radius:4px;font-size:1rem}
+        .book textarea{height:120px;resize:none}
+
+        /* --- Footer --- */
+        .footer{background:var(--dark);color:#fff;padding:5rem 5% 2rem}
+        .footer-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:3rem}
+        .footer-box h3{font-size:1.5rem;margin-bottom:1.2rem;color:var(--secondary);position:relative}
+        .footer-box h3::after{content:'';position:absolute;left:0;bottom:-6px;width:40px;height:2px;background:var(--secondary)}
+        .footer-box p,.footer-box a{color:#d7ccc8;margin-bottom:.7rem;display:block;text-decoration:none}
+        .footer-box a:hover{color:#fff}
+        .social-links{display:flex;gap:1rem;margin-top:1rem}
+        .social-links a{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);transition:var(--transition)}
+        .social-links a:hover{background:var(--primary);transform:translateY(-3px)}
+        .newsletter-form{display:flex;margin-top:1rem}
+        .newsletter-form input{flex:1;padding:.8rem;border:none;border-radius:4px 0 0 4px}
+        .newsletter-form button{padding:.8rem 1rem;border:none;background:var(--primary);color:#fff;border-radius:0 4px 4px 0;cursor:pointer}
+        .credit{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);color:#d7ccc8}
+
+        /* --- Cart Sidebar --- */
+        .cart-sidebar{position:fixed;top:0;right:-450px;width:100%;max-width:450px;height:100vh;background:#fff;box-shadow:-5px 0 30px rgba(0,0,0,.15);transition:right .4s;z-index:2000;display:flex;flex-direction:column;padding:1.5rem}
+        .cart-sidebar.open{right:0}
+        .cart-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:1rem;margin-bottom:1rem}
+        .cart-header h3{color:var(--primary)}
+        .close-cart{background:none;border:none;font-size:2rem;cursor:pointer;color:var(--text)}
+        .cart-items{flex:1;overflow-y:auto}
+        .cart-item{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid #f5f5f5}
+        .item-info h4{margin-bottom:.3rem;color:var(--primary)}
+        .item-quantity{display:flex;align-items:center;gap:.5rem}
+        .quantity-btn{width:28px;height:28px;border:none;background:#f0f0f0;cursor:pointer;border-radius:4px}
+        .remove-item{background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1.2rem;margin-left:.5rem}
+        .cart-footer{border-top:1px solid #eee;padding-top:1rem}
+        .cart-total{display:flex;justify-content:space-between;font-weight:700;font-size:1.2rem;margin-bottom:1rem}
+        .checkout-btn{width:100%;padding:.8rem;border:none;background:var(--primary);color:#fff;border-radius:4px;cursor:pointer;font-weight:600}
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .header {
+                padding: 1rem 5%;
+            }
+
+            .navbar {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease;
+            }
+
+            .navbar.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            .navbar a {
+                margin: 1rem 0;
+                font-size: 1.2rem;
+            }
+
+            #menu-btn {
+                display: block;
+            }
+
+            .home .content h3 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .home .row {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about .row, .book .container {
+                flex-direction: column;
+            }
+
+            .heading {
+                font-size: 2.3rem;
+            }
+
+            .box-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home .content h3 {
+                font-size: 2.3rem;
+            }
+
+            .heading {
+                font-size: 2rem;
+            }
+
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        body {
+            background: var(--vintage-paper);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect fill="none" stroke="%235d4037" stroke-width="2" x="10" y="10" width="80" height="80" rx="10" ry="10"/></svg>');
+        }
+        
+        h1, h2, h3, h4, .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .header.scrolled {
+            padding: 0.7rem 5%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        /* New Seasonal Section */
+        .seasonal {
+            padding: 6rem 5%;
+            background: linear-gradient(rgba(93, 64, 55, 0.9), rgba(93, 64, 55, 0.9)), 
+                        url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+        }
+        
+        .seasonal h2 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .seasonal-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: flex;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .seasonal-image {
+            flex: 0 0 40%;
+            background: url('https://images.unsplash.com/photo-1554119924-6d3a8b03a88f?auto=format&fit=crop&w=800&q=80') center/cover;
+        }
+        
+        .seasonal-content {
+            flex: 1;
+            padding: 2rem;
+            color: var(--text);
+            text-align: left;
+        }
+        
+        .seasonal-content h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .seasonal-tag {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .countdown-item {
+            background: var(--primary);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .countdown-value {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        
+        /* Barista Section */
+        .baristas {
+            padding: 6rem 5%;
+            background: white;
+        }
+        
+        .barista-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .barista-card {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .barista-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .barista-image {
+            height: 300px;
+            background-size: cover;
+            background-position: top;
+        }
+        
+        .barista-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .barista-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .barista-role {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .barista-specialty {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        /* Freshness Tracker */
+        .freshness {
+            padding: 4rem 5%;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .freshness h2 {
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+        
+        .freshness-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .freshness-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .freshness-item h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .freshness-time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Animation for coffee brewing */
+        @keyframes pourCoffee {
+            0% { height: 0; opacity: 0; }
+            30% { opacity: 1; }
+            80% { height: 80%; }
+            100% { height: 100%; opacity: 1; }
+        }
+        
+        @keyframes coffeeSteam {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-20px) scale(1.1); opacity: 0; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <a href="#" class="logo">Madras Roast Co. <i class="fas fa-mug-hot"></i></a>
+
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#seasonal">Seasonal</a>
+        <a href="#menu">Menu</a>
+        <a href="#baristas">Baristas</a>
+        <a href="#review">Reviews</a>
+        <a href="#book">Reserve</a>
+    </nav>
+
+    <div class="header-buttons">
+        <a href="#book" class="btn">Book a table</a>
+        <div class="cart-icon" id="cartToggle">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </div>
+    </div>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+</header>
+
+<!-- HERO -->
+<section class="home" id="home">
+  <div class="home-content">
+    <h1>Brewing Indian Flavors Since 2005</h1>
+    <p>Filter Coffee, Masala Chai, and Nostalgic Plates – all served with warmth and soul.</p>
+    <a href="#menu" class="btn">Explore our Indian Menu</a>
+  </div>
+</section>
+
+<!-- Cart Sidebar -->
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3>Your Order</h3>
+        <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+        <div class="empty-cart">Your cart is empty</div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total:</span>
+            <span class="total-amount">₹0.00</span>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+    </div>
+</div>
+
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <h1 class="heading">Our Story</h1>
+  <div class="row">
+    <div class="about-image">
+      <img src="cafe.webp" alt="Indian café" />
+    </div>
+    <div class="about-content">
+      <h3>Where Indian Heritage Meets Café Culture</h3>
+      <p>Inspired by India's chai stalls and home kitchens, Classic Brew brings local tastes to a cozy café setting. Since 2005, we've blended the essence of traditional recipes with modern comfort.</p>
+      <p>From strong South Indian filter coffee to spicy North Indian snacks, our menu speaks every language of India. Come sip, savor, and share stories at our tables.</p>
+      <div class="icons-container">
+        <div class="icons">
+          <img src="coffee-beans.png" alt="icon" />
+          <h3>Locally Sourced</h3>
+        </div>
+        <div class="icons">
+          <img src="location.png" alt="icon" />
+          <h3>6 Cities</h3>
+        </div>
+        <div class="icons">
+          <img src="delivery-man.png" alt="icon" />
+          <h3>Fast Delivery</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- New Seasonal Section -->
+<section class="seasonal" id="seasonal">
+  <h2>Festive Favorites</h2>
+  <p>Celebrating Indian traditions with every sip</p>
+  <div class="seasonal-card">
+    <div class="seasonal-image" style="background:url('Basil-Ginger-Tea.jpg') center/cover;"></div>
+    <div class="seasonal-content">
+      <span class="seasonal-tag">Monsoon Special</span>
+      <h3>Ginger Tulsi Chai</h3>
+      <p>A soothing mix of tulsi (holy basil), ginger, and cardamom – perfect for rainy days and conversations.</p>
+      <span class="price">₹50</span>
+      <div class="countdown">
+        <div class="countdown-item">
+          <span class="countdown-value">10</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value">12</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value">30</span>
+          <span class="countdown-label">Mins</span>
+        </div>
+      </div>
+      <button class="btn add-to-cart" data-name="Ginger Tulsi Tea" data-price="50" style="background: var(--gold);">
+  Try It Now
+</button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Barista Section -->
+<section class="baristas" id="baristas">
+    <h1 class="heading">Meet Our Baristas</h1>
+    
+    
+    <div class="barista-container">
+        <div class="barista-card">
+            <div class="barista-image" style="background-image: url('arjun.jpg');"></div>
+            <div class="barista-info">
+                <h3>Arjun</h3>
+                <div class="barista-role">Chai Specialist</div>
+                <p class="barista-specialty">Specialty: South Indian Filter Coffee</p>
+                <p>“Coffee is not just brewed — it’s revered.”</p>
+            </div>
+        </div>
+        
+        <div class="barista-card">
+            <div class="barista-image" style="background-image: url('priya.jpg');"></div>
+            <div class="barista-info">
+                <h3>Priya</h3>
+                <div class="barista-role"> Culinary Alchemist</div>
+                <p class="barista-specialty">Specialty: Stuffed Aloo Paratha</p>
+                <p>“Flavor begins where the recipe ends.”</p>
+            </div>
+        </div>
+        
+        <div class="barista-card">
+            <div class="barista-image" style="background-image: url('ravi.jpg');"></div>
+            <div class="barista-info">
+                <h3>Ravi</h3>
+                <div class="barista-role">Seasonal Specials Lead</div>
+                <p class="barista-specialty">Specialty: Desserts</p>
+                <p>“Every bite should carry a memory.”</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Freshness Tracker -->
+<section class="freshness">
+    <h2>Freshly Prepared Daily</h2>
+    
+    <div class="freshness-grid">
+        <div class="freshness-item">
+            <h3>Khari Biscuit</h3>
+                <p>Light and crispy puff pastries served warm – the perfect chai companion.</p>
+                <span class="price">₹30</span>
+                <button class="add-to-cart" data-name="Khari Biscuit" data-price="30">Add to Cart</button>
+        </div>
+        
+        <div class="freshness-item">
+            <h3>Mini Samosa Bites</h3>
+            <p>Bite-sized samosas filled with spiced potato and peas.</p>
+            <span class="price">₹40</span>
+            <button class="add-to-cart" data-name="Mini Samosa Bites" data-price="40">Add to Cart</button>
+        </div>
+        
+        <div class="freshness-item">
+            <h3>Millet Paniyaram Bowl</h3>
+            <p>South Indian-style dumplings, served with chutneys.</p>
+            <span class="price">₹80</span>
+            <button class="add-to-cart" data-name="Mini Samosa Bites" data-price="80">Add to Cart</button>
+        </div>
+    </div>
+</section>
+
+<!-- Menu -->
+<section class="menu" id="menu">
+    <h1 class="heading">Our Menu</h1>
+    <div class="menu-tabs">
+        <button class="tab-btn active" data-tab="coffee">Coffee & Drinks</button>
+        <button class="tab-btn" data-tab="breakfast">Breakfast</button>
+        <button class="tab-btn" data-tab="lunch">Indian Touch</button>
+        <button class="tab-btn" data-tab="desserts">Desserts</button>
+    </div>
+
+    <!-- Coffee -->
+    <div class="menu-content active" id="coffee">
+        <div class="box-container">
+            <div class="box">
+                <img src="coffee.avif" alt="South Indian Filter Coffee">
+                <div class="content">
+                    <h3>South Indian Filter Coffee</h3>
+                    <p>Strong decoction served with frothy milk in dabarah set</p>
+                    <span class="price">₹40</span>
+                    <button class="add-to-cart" data-name="South Indian Filter Coffee" data-price="40">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="chai.jpeg" alt="Masala Chai">
+                <div class="content">
+                    <h3>Masala Chai</h3>
+                    <p>	A spiced Indian tea blend with ginger, cardamom, and milk</p>
+                    <span class="price">₹50</span>
+                    <button class="add-to-cart" data-name="Masala Chai" data-price="50">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="badam-milk.webp" alt="Badam Milk">
+                <div class="content">
+                    <h3>Badam Milk</h3>
+                    <p>Sweet almond milk with saffron and cardamom</p>
+                    <span class="price">₹75</span>
+                    <button class="add-to-cart" data-name="Badam Milk" data-price="75">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breakfast -->
+    <div class="menu-content" id="breakfast">
+        <div class="box-container">
+            <div class="box">
+                <img src="idli-sambar.webp" alt="Idli & Sambar">
+                <div class="content">
+                    <h3>Idli & Sambar</h3>
+                    <p>Steamed rice cakes with lentil stew and chutney.</p>
+                    <span class="price">₹70</span>
+                    <button class="add-to-cart" data-name="	Idli & Sambar" data-price="70">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="dosa.jpeg" alt="Classic Ghee Dosa">
+                <div class="content">
+                    <h3>Classic Ghee Dosa</h3>
+                    <p>olden-crisp dosa cooked in pure ghee, served with coconut chutney and sambar.</p>
+                    <span class="price">₹90</span>
+                    <button class="add-to-cart" data-name="Classic Ghee Dosa" data-price="90">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="aloo.jpg" alt="Aloo Paratha with Curd">
+                <div class="content">
+                    <h3>	Aloo Paratha with Curd</h3>
+                    <p>North Indian flatbread stuffed with spiced mashed potatoes.</p>
+                    <span class="price">₹120</span>
+                    <button class="add-to-cart" data-name="	Aloo Paratha with Curd" data-price="120">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lunch -->
+    <div class="menu-content" id="lunch">
+        <div class="box-container">
+            <div class="box">
+                <img src="Paneer.jpg" alt="Paneer Kathi Roll">
+                <div class="content">
+                    <h3>Paneer Kathi Roll</h3>
+                    <p>Indian wrap with grilled paneer, veggies & spices.</p>
+                    <span class="price">₹110</span>
+                    <button class="add-to-cart" data-name="Paneer Kathi Roll" data-price="110">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="biryani.jpg" alt="Veg Biryani">
+                <div class="content">
+                    <h3>Veg Biryani</h3>
+                    <p>Aromatic basmati rice with veggies, saffron & Indian spices.</p>
+                    <span class="price">₹130</span>
+                    <button class="add-to-cart" data-name="Veg Biryani" data-price="130">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="tandoori-paneer-tikka.jpg" alt="Tandoori Paneer">
+                <div class="content">
+                    <h3>Tandoori Paneer</h3>
+                    <p>Grilled paneer with spiced yogurt on a bed of greens.</p>
+                    <span class="price">₹120</span>
+                    <button class="add-to-cart" data-name="Tandoori Paneer" data-price="120">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desserts -->
+    <div class="menu-content" id="desserts">
+        <div class="box-container">
+            <div class="box">
+                <img src="gulab.avif" alt="Gulab Jamun">
+                <div class="content">
+                    <h3>Gulab Jamun</h3>
+                    <p>	Deep-fried khoya balls soaked in cardamom syrup.</p>
+                    <span class="price">₹60</span>
+                    <button class="add-to-cart" data-name="Gulab Jamun" data-price="60">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="Rasmalai.webp" alt="Rasmalai">
+                <div class="content">
+                    <h3>Rasmalai</h3>
+                    <p>Soft cheese dumplings in sweet saffron milk.</p>
+                    <span class="price">₹70</span>
+                    <button class="add-to-cart" data-name="Rasmalai" data-price="70">Add to Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <img src="sweet.jpg" alt="Indian Mithai Platter">
+                <div class="content">
+                    <h3>Indian Mithai Platter</h3>
+                    <p>	Kaju katli, soan papdi, laddoo, and jalebi.</p>
+                    <span class="price">₹180</span>
+                    <button class="add-to-cart" data-name="Indian Mithai Platter" data-price="180">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Review -->
+<section class="review" id="review">
+    <h1 class="heading">Customer Reviews</h1>
+    <div class="review-slider swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <i class="fas fa-quote-left"></i>
+                <img src="v.jpg" alt="Vidhya Raman">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>""The filter coffee reminded me of my grandmother's recipe. Simply nostalgic!"</p>
+                <h3>Vidhya Raman</h3><span>Freelance Designer, Chennai</span>
+            </div>
+            <div class="swiper-slide">
+                <i class="fas fa-quote-left"></i>
+                <img src="r1.avif" alt="Rahul">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                <p>"Perfect place for evening snacks. The samosa and cutting chai are unbeatable."</p>
+                <h3>Rahul</h3><span>College Student</span>
+            </div>
+            <div class="swiper-slide">
+                <i class="fas fa-quote-left"></i>
+                <img src="r.jpg" alt="Ramesh">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>“I stopped by for a quick Rasmalai — ended up staying for 2 hours. The ambience is calm!”</p>
+                <h3>Ramesh</h3><span>Banker, Hyderabad</span>
+            </div>
+            <div class="swiper-slide">
+                <i class="fas fa-quote-left"></i>
+                <img src="p.webp" alt="Pooja">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>“Their ghee dosa is unbeatable! Crisp and fresh. It is my go-to after morning walks.”</p>
+                <h3>Pooja</h3><span>Homemaker, Chennai</span>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- Book -->
+<section class="book" id="book">
+    <h1 class="heading">Reserve a Table</h1>
+    <div class="container">
+        <div class="book-image">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80" alt="Interior">
+        </div>
+        <div class="book-form">
+            <h2>Book Your Experience</h2>
+            <form id="reservationForm">
+                <input type="text" placeholder="Your Name" class="box" required>
+                <input type="email" placeholder="Your Email" class="box" required>
+                <input type="tel" placeholder="Phone Number" class="box" required>
+                <input type="number" placeholder="Number of Guests" class="box" min="1" required>
+                <input type="date" class="box" required>
+                <input type="time" class="box" required>
+                <textarea placeholder="Special Requests" class="box" rows="3"></textarea>
+                <input type="submit" value="Book Now" class="btn">
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-box">
+            <h3>Our Locations</h3>
+            <p>Six cafés across the city—each with its own charm yet the same commitment to quality.</p>
+            <div class="map">Interactive Map Coming Soon</div>
+        </div>
+        <div class="footer-box">
+            <h3>Opening Hours</h3>
+            <p>Mon-Fri 7 AM - 9 PM<br>Sat-Sun 8 AM - 10 PM<br>Holiday hours may vary.</p>
+            <h3 style="margin-top:1.5rem;">Quick Links</h3>
+            <a href="#home"><i class="fas fa-arrow-right"></i> Home</a>
+            <a href="#about"><i class="fas fa-arrow-right"></i> About</a>
+            <a href="#seasonal"><i class="fas fa-arrow-right"></i> Seasonal</a>
+            <a href="#menu"><i class="fas fa-arrow-right"></i> Menu</a>
+            <a href="#baristas"><i class="fas fa-arrow-right"></i> Baristas</a>
+            <a href="#review"><i class="fas fa-arrow-right"></i> Reviews</a>
+            <a href="#book"><i class="fas fa-arrow-right"></i> Reserve</a>
+        </div>
+        <div class="footer-box">
+            <h3>Contact Us</h3>
+            <a href="tel:+91-987654321"><i class="fas fa-phone"></i> +91-987654321</a>
+            <a href="mailto:info@classicbrew.com"><i class="fas fa-envelope"></i> info@classicbrew.com</a>
+            <a href="#"><i class="fas fa-map-marker-alt"></i> Besant Nagar, Chennai</a>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <h3 style="margin-top:1.5rem;">Newsletter</h3>
+            <p>Special offers & updates</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="credit">
+        &copy; 2025 Madras Roast Co. | All rights reserved | Crafted with <i class="fas fa-heart"></i> for coffee lovers
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Initialize cart
+        let cart = [];
+        const cartToggle = document.getElementById('cartToggle');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+        const cartCount = document.querySelector('.cart-count');
+        
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const navbar = document.querySelector('.navbar');
+        
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('fa-times');
+            navbar.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('fa-times');
+                navbar.classList.remove('active');
+            });
+        });
+        
+        // Cart toggle
+        cartToggle.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+        });
+        
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+        });
+        
+        // Close cart when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!cartSidebar.contains(e.target) && e.target !== cartToggle && !cartToggle.contains(e.target)) {
+                cartSidebar.classList.remove('open');
+            }
+        });
+        
+        // Menu tabs
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const menuContents = document.querySelectorAll('.menu-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Hide all menu contents
+                menuContents.forEach(content => content.classList.remove('active'));
+                // Show selected content
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const name = this.getAttribute('data-name');
+                const price = parseFloat(this.getAttribute('data-price'));
+                
+                // Check if item is already in cart
+                const existingItem = cart.find(item => item.name === name);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCartDisplay();
+                cartSidebar.classList.add('open');
+                
+                // Visual feedback
+                this.textContent = 'Added!';
+                this.style.backgroundColor = '#4CAF50';
+                setTimeout(() => {
+                    this.textContent = 'Add to Cart';
+                    this.style.backgroundColor = '';
+                }, 1500);
+            });
+        });
+        
+        // Update cart display
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const totalAmount = document.querySelector('.total-amount');
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update cart items
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                totalAmount.textContent = '₹0.00';
+                return;
+            }
+            
+            let itemsHTML = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                itemsHTML += `
+                    <div class="cart-item">
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <span class="price">₹${item.price.toFixed(2)}</span>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="quantity-btn minus" data-index="${index}">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" readonly>
+                            <button class="quantity-btn plus" data-index="${index}">+</button>
+                            <button class="remove-item" data-index="${index}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = itemsHTML;
+            totalAmount.textContent = `₹${total.toFixed(2)}`;
+            
+            // Add event listeners to new buttons
+            document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity -= 1;
+                        updateCartDisplay();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    cart[index].quantity += 1;
+                    updateCartDisplay();
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    cart.splice(index, 1);
+                    updateCartDisplay();
+                });
+            });
+        }
+        
+        // Checkout functionality
+        document.getElementById('checkoutBtn').addEventListener('click', function() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            // Save the cart to localStorage again (just to be sure)
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = 'checkout.html'; // Redirects to your checkout page
+            // Prepare order details for Google Form submission
+            let orderDetails = "Order Details:\n";
+            cart.forEach(item => {
+                orderDetails += `${item.quantity}x ${item.name} - ₹${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            orderDetails += `\nTotal: ₹${total.toFixed(2)}`;
+            
+            // In a real implementation, this would submit to Google Form
+            alert(`Order placed successfully!\n\n${orderDetails}\n\n(Form submission to Google Form would happen here)`);
+            
+            // Reset cart
+            cart = [];
+            updateCartDisplay();
+            cartSidebar.classList.remove('open');
+        });
+        
+        // Initialize Swiper
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            grabCursor: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                }
+            }
+        });
+        
+        // Form submission
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Table reservation submitted successfully!');
+            this.reset();
+        });
+        
+        // Scroll animation for headings
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        document.querySelectorAll('.heading').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // Seasonal countdown timer (simulated)
+    function updateCountdown() {
+        const days = document.querySelector('.countdown-item:first-child .countdown-value');
+        const hours = document.querySelector('.countdown-item:nth-child(2) .countdown-value');
+        const minutes = document.querySelector('.countdown-item:last-child .countdown-value');
+        
+        // This is a static example - in real implementation, calculate actual time difference
+        let mins = parseInt(minutes.textContent);
+        mins = (mins - 1 + 60) % 60;
+        minutes.textContent = mins.toString().padStart(2, '0');
+        
+        if (mins === 59) {
+            let hrs = parseInt(hours.textContent);
+            hrs = (hrs - 1 + 24) % 24;
+            hours.textContent = hrs.toString().padStart(2, '0');
+            
+            if (hrs === 23) {
+                let dys = parseInt(days.textContent);
+                days.textContent = (dys - 1).toString().padStart(2, '0');
+            }
+        }
+    }
+    
+    setInterval(updateCountdown, 60000); // Update every minute
+    
+    // Coffee origins interaction
+    const markers = document.querySelectorAll('.origin-marker');
+    const originInfo = document.getElementById('origin-info');
+    
+    markers.forEach(marker => {
+        marker.addEventListener('click', function() {
+            const country = this.getAttribute('data-country');
+            let content = '';
+            
+            switch(country) {
+                case 'Colombia':
+                    content = `<h4>Colombian Supremo</h4>
+                               <p>Grown in the Andes mountains at 1500-2000m elevation. Known for its balanced flavor with notes of caramel and nuts.</p>
+                               <p><strong>Roast:</strong> Medium</p>
+                               <p><strong>Harvest:</strong> April-June</p>`;
+                    break;
+                case 'Ethiopia':
+                    content = `<h4>Ethiopian Yirgacheffe</h4>
+                               <p>From the birthplace of coffee. Floral and tea-like with bright citrus notes and a delicate body.</p>
+                               <p><strong>Roast:</strong> Light</p>
+                               <p><strong>Harvest:</strong> October-December</p>`;
+                    break;
+                case 'Indonesia':
+                    content = `<h4>Sumatra Mandheling</h4>
+                               <p>Earthy and complex with low acidity. Full-bodied with notes of dark chocolate and cedar.</p>
+                               <p><strong>Roast:</strong> Dark</p>
+                               <p><strong>Harvest:</strong> May-September</p>`;
+                    break;
+                case 'Brazil':
+                    content = `<h4>Brazil Santos</h4>
+                               <p>Nutty and sweet with chocolate undertones. Our most popular base for espresso blends.</p>
+                               <p><strong>Roast:</strong> Medium-Dark</p>
+                               <p><strong>Harvest:</strong> May-September</p>`;
+                    break;
+            }
+            
+            originInfo.innerHTML = content;
+            originInfo.style.display = 'block';
+            originInfo.style.top = `${this.offsetTop - 100}px`;
+            originInfo.style.left = `${this.offsetLeft + 30}px`;
+        });
+    });
+    
+    // Close origin info when clicking elsewhere
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.origin-marker') && !e.target.closest('.origin-info')) {
+            originInfo.style.display = 'none';
+        }
+    });
+    
+    // Freshness tracker (simulated)
+    function updateFreshnessTimes() {
+        const times = document.querySelectorAll('.freshness-time');
+        times.forEach((time, index) => {
+            let current = parseInt(time.textContent);
+            // Simulate time passing - in real implementation, this would use actual timestamps
+            if (index === 0) current = (current + 0.5) % 12;
+            if (index === 1) current = (current + 1) % 24;
+            if (index === 2) current = (current + 0.3) % 24;
+            
+            time.textContent = current.toFixed(1) + (index === 0 ? '' : '');
+        });
+    }
+    
+    setInterval(updateFreshnessTimes, 30000); // Update every 30 seconds
+    
+
+</script>
+</body>
+</html>
