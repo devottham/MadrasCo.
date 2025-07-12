@@ -507,15 +507,16 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = false;
             buttonText.textContent = 'Place Order';
 
-            if (data.result === 'success') {
-                showMessage('success', 'Your order has been placed successfully!');
-                localStorage.removeItem('cart');
-                cart = [];
-                displayCartItems();
-                checkoutForm.reset();
+            if (data.created === 1) {
+               showMessage('success', 'Your order has been placed successfully!');
+               localStorage.removeItem('cart');
+               cart = [];
+               displayCartItems();
+               checkoutForm.reset();
             } else {
-                showMessage('error', 'Something went wrong. Please try again.');
+               showMessage('error', 'Something went wrong. Please try again.');
             }
+
         })
         .catch(error => {
             submitBtn.disabled = false;
