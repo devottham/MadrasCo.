@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Madras Roast Co.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5d4037;
+            --secondary: #d7ccc8;
+            --accent: #8d6e63;
+            --text: #3e2723;
+            --light: #faf8f5;
+            --dark: #2c1e1a;
+            --gold: #c8a951;
+            --transition: all 0.4s ease;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --vintage-paper: #f5f0e6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--vintage-paper);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1, h2, h3, h4, .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Header */
+        .checkout-header {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: var(--gold);
+            margin-left: 5px;
+        }
+        
+        /* Main Container */
+        .checkout-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 992px) {
+            .checkout-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-items {
+            margin-bottom: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .item-price {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #f0f0f0;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 1rem 0;
+            border-top: 1px solid #eee;
+            margin-top: 1rem;
+        }
+        
+        /* Checkout Form */
+        .checkout-form {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        
+        .form-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.1);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .message-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Footer */
+        .checkout-footer {
+            background: var(--dark);
+            color: #fff;
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #d7ccc8;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+        }
+        
+        .credit {
+            color: #d7ccc8;
+            font-size: 0.9rem;
+        }
+        
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+        }
+        
+        .empty-cart i {
+            font-size: 3rem;
+            color: #d7ccc8;
+            margin-bottom: 1rem;
+        }
+        
+        .back-to-menu {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="checkout-header">
+        <a href="MadrasCo.html" class="logo">Madras Roast Co. <i class="fas fa-mug-hot"></i></a>
+        <div class="steps">Checkout</div>
+    </header>
+
+    <main class="checkout-container">
+        <!-- Order Summary -->
+        <section class="order-summary">
+            <div class="summary-header">
+                <h2>Your Order</h2>
+                <span id="itemCount">0 items</span>
+            </div>
+            
+            <div class="cart-items" id="cartItemsContainer">
+                <!-- Cart items will be loaded here dynamically -->
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you haven't added anything to your cart yet</p>
+                    <a href="MadrasCo.html#menu" class="back-to-menu">Browse Menu</a>
+                </div>
+            </div>
+            
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="orderTotal">₹0.00</span>
+            </div>
+        </section>
+        
+        <!-- Checkout Form -->
+        <section class="checkout-form">
+            <div class="form-header">
+                <h2>Complete Your Order</h2>
+                <p>Enter your details for order processing</p>
+            </div>
+            
+            <div id="messageContainer"></div>
+            
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address (Optional)</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address" class="form-control" placeholder="Enter your delivery address" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Special Instructions</label>
+                    <textarea id="notes" class="form-control" placeholder="Any special requests or notes?" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">
+                    <span id="buttonText">Place Order</span>
+                </button>
+            </form>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="checkout-footer">
+        <div class="footer-links">
+            <a href="index.html#about">About</a>
+            <a href="index.html#menu">Menu</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <p class="credit">&copy; 2025 Madras Roast Co. | All rights reserved | Crafted with <i class="fas fa-heart"></i> for coffee lovers</p>
+    </footer>
+    
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve cart from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const itemCount = document.getElementById('itemCount');
+    const orderTotal = document.getElementById('orderTotal');
+    const checkoutForm = document.getElementById('checkoutForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const buttonText = document.getElementById('buttonText');
+    const messageContainer = document.getElementById('messageContainer');
+
+    // Display cart items
+    function displayCartItems() {
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you haven't added anything to your cart yet</p>
+                    <a href="index.html#menu" class="back-to-menu">Browse Menu</a>
+                </div>
+            `;
+            itemCount.textContent = '0 items';
+            orderTotal.textContent = '₹0.00';
+            return;
+        }
+
+        let itemsHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            itemsHTML += `
+                <div class="cart-item">
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <span class="item-price">₹${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="item-quantity">
+                        <span>${item.quantity}x</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        cartItemsContainer.innerHTML = itemsHTML;
+        itemCount.textContent = `${cart.length} ${cart.length === 1 ? 'item' : 'items'}`;
+        orderTotal.textContent = `₹${total.toFixed(2)}`;
+    }
+
+    // Show message function
+    function showMessage(type, text) {
+        messageContainer.innerHTML = `
+            <div class="message message-${type}">
+                ${text}
+            </div>
+        `;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            messageContainer.innerHTML = '';
+        }, 5000);
+    }
+
+    // Handle form submission
+    checkoutForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validate cart
+        if (cart.length === 0) {
+            showMessage('error', 'Your cart is empty. Please add items before placing an order.');
+            return;
+        }
+
+        // Get form values
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value || 'Not provided';
+        const address = document.getElementById('address').value;
+        const notes = document.getElementById('notes').value || 'No special instructions';
+
+        // Calculate total
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        // Prepare order details
+        const orderDetails = cart.map(item => 
+            `${item.quantity}x ${item.name} - ₹${(item.price * item.quantity).toFixed(2)}`
+        ).join('\n');
+
+        // Create order object
+        const order = {
+            name,
+            phone,
+            email,
+            address,
+            notes,
+            total: total.toFixed(2),
+            items: cart.map(item => `${item.quantity}x ${item.name}`).join(', '),
+            date: new Date().toISOString(),
+            status: 'New'
+        };
+
+        // Show loading state
+        submitBtn.disabled = true;
+        buttonText.innerHTML = `<span class="spinner"></span> Processing Order...`;
+
+        // Send to Google Sheets via Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbxLaRZG5EBmnR-mATDziT08IBgda49CuFzdrFWM9xIET0D6jk74mv_fLj73lEt5TjPX/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        })
+        .then(response => response.json())
+        .then(data => {
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Place Order';
+
+            if (data.result === 'success') {
+                showMessage('success', 'Your order has been placed successfully!');
+                localStorage.removeItem('cart');
+                cart = [];
+                displayCartItems();
+                checkoutForm.reset();
+            } else {
+                showMessage('error', 'Something went wrong. Please try again.');
+            }
+        })
+        .catch(error => {
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Place Order';
+            showMessage('error', 'Network error. Please try again later.');
+        });
+    });
+
+    // Initial display of cart items
+    displayCartItems();
+});
+</script>
+</body>
+</html>
