@@ -482,15 +482,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Create order object
         const order = {
-            name,
-            phone,
-            email,
-            address,
-            notes,
-            total: total.toFixed(2),
-            items: cart.map(item => `${item.quantity}x ${item.name}`).join(', '),
-            date: new Date().toISOString(),
-            status: 'New'
+            Name: name,
+            Phone: phone,
+            Email: email,
+            Address: address,
+            Notes: notes,
+            Total: total.toFixed(2),
+            Items: cart.map(item => `${item.quantity}x ${item.name}`).join(', '),
+            Status: 'New'
         };
 
         // Show loading state
@@ -498,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonText.innerHTML = `<span class="spinner"></span> Processing Order...`;
 
         // Send to Google Sheets via Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbxLaRZG5EBmnR-mATDziT08IBgda49CuFzdrFWM9xIET0D6jk74mv_fLj73lEt5TjPX/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbzGy1G-_eN2Zs_iiriHoQ-jKlATVr9ix3R3HEAxmuzoGotnElmLUGCX-WpHti9xCPk/exec', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(order)
