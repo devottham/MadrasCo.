@@ -302,6 +302,37 @@
             font-weight: 600;
             text-decoration: none;
         }
+        @media (max-width: 767px) {
+    .checkout-container {
+        padding: 0 1rem;
+        grid-template-columns: 1fr;
+    }
+    
+    .order-summary, .checkout-form {
+        padding: 1.5rem;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .item-info {
+        width: 100%;
+    }
+    
+    .item-quantity {
+        justify-content: flex-start;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-control {
+        padding: 0.7rem;
+    }
+}
     </style>
 </head>
 <body>
