@@ -531,6 +531,218 @@
             0% { transform: scale(1); opacity: 1; }
             100% { transform: scale(2.5); opacity: 0; }
         }
+        /* Improved Mobile Responsiveness */
+@media (max-width: 767px) {
+    /* Header adjustments */
+    .header {
+        padding: 0.8rem 5%;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    /* Hero section */
+    .home {
+        padding-top: 70px; /* Add space for fixed header */
+    }
+    
+    .home-content h1 {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .home-content p {
+        font-size: 1rem;
+    }
+    
+    /* Sections */
+    section {
+        padding: 4rem 5%;
+    }
+    
+    .heading {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* About section */
+    .about .row {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .about-image, .about-content {
+        flex: 1 1 100%;
+    }
+    
+    /* Seasonal card */
+    .seasonal-card {
+        flex-direction: column;
+    }
+    
+    .seasonal-image {
+        flex: 0 0 200px;
+    }
+    
+    /* Menu tabs */
+    .menu-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        justify-content: flex-start;
+    }
+    
+    .tab-btn {
+        white-space: nowrap;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Book/Reservation form */
+    .book .container {
+        flex-direction: column;
+    }
+    
+    .book-form {
+        padding: 1.5rem;
+    }
+    
+    .book .box {
+        padding: 0.8rem;
+    }
+    
+    /* Forms */
+    input, textarea, select {
+        font-size: 16px !important; /* Prevent zooming on focus */
+    }
+    
+    /* Buttons */
+    .btn {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    /* Footer */
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    /* Cart sidebar */
+    .cart-sidebar {
+        max-width: 100%;
+    }
+    
+    /* Review slider */
+    .swiper-slide {
+        padding: 2rem 1rem;
+    }
+    
+    /* Barista cards */
+    .barista-container {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Freshness grid */
+    .freshness-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Very small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+    .home-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .heading {
+        font-size: 1.6rem;
+    }
+    
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Seasonal countdown */
+    .countdown-item {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .countdown-value {
+        font-size: 1.3rem;
+    }
+    
+    /* Menu items */
+    .box-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Form inputs */
+    .book .box, .form-control {
+        padding: 0.7rem;
+    }
+}
+        @media (max-width: 991px) {
+    /* Header adjustments */
+    .header {
+        padding: 0.8rem 5%;
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        order: 1;
+        flex: 1;
+        min-width: 50%;
+    }
+    
+    #menu-btn {
+        order: 2;
+        margin-left: auto;
+    }
+    
+    .header-buttons {
+        order: 3;
+        width: 100%;
+        margin-top: 0.8rem;
+        justify-content: space-between;
+    }
+    
+    .header-buttons .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .cart-icon {
+        margin-left: 0;
+        font-size: 1.3rem;
+    }
+    
+    .cart-count {
+        width: 16px;
+        height: 16px;
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.3rem;
+        min-width: 60%;
+    }
+    
+    .header-buttons .btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .cart-icon {
+        font-size: 1.2rem;
+    }
+}
     </style>
 </head>
 <body>
