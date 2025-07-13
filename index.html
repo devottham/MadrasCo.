@@ -907,17 +907,17 @@
         </div>
         <div class="book-form">
             <h2>Book Your Experience</h2>
-            <form id="reservationForm" name="reservation" netlify>
-            <input type="hidden" name="form-name" value="reservation">
-            <input type="text" placeholder="Your Name" class="box" name="name" required>
-            <input type="email" placeholder="Your Email" class="box" name="email" required>
-            <input type="tel" placeholder="Phone Number" class="box" name="phone" required>
-            <input type="number" placeholder="Number of Guests" class="box" name="guests" min="1" required>
-            <input type="date" class="box" name="date" required>
-            <input type="time" class="box" name="time" required>
-            <textarea placeholder="Special Requests" class="box" name="requests" rows="3"></textarea>
-            <input type="submit" value="Book Now" class="btn">
-        </form>
+            <form name="reservation" netlify>
+                <input type="hidden" name="form-name" value="reservation">
+                <input type="text" placeholder="Your Name" class="box" name="name" required>
+                <input type="email" placeholder="Your Email" class="box" name="email" required>
+                <input type="tel" placeholder="Phone Number" class="box" name="phone" required>
+                <input type="number" placeholder="Number of Guests" class="box" name="guests" min="1" required>
+                <input type="date" class="box" name="date" required>
+                <input type="time" class="box" name="time" required>
+                <textarea placeholder="Special Requests" class="box" name="requests" rows="3"></textarea>
+                <button type="submit" class="btn">Book Now</button>
+            </form>
         </div>
     </div>
 </section>
