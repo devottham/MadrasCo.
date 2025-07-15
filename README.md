@@ -1,4 +1,4 @@
-# 🇮🇳 Madras Roast Co. – A Indian Café Experience
+#Madras Roast Co. – A Indian Café Experience
 
 Welcome to **Madras Roast Co**, a handcrafted café website inspired by the warmth, tradition, and flavors of India. Designed with passion and built with modern web technologies, this project offers an elegant café ordering interface — from browsing authentic South Indian dishes to placing an order that lands directly in the kitchen (or Google Sheet 😉).
 
